@@ -1,13 +1,75 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Roboto+Slab:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-family: 'Roboto Slab', sans-serif;
+  line-height: 1.5;
+  color: #555555;
+}
+
+h3 {
+  text-align: center;
+}
+
+button {
+  background-color: green;
+  color: white;
+  border-radius: 2px;
+}
+
+.navbar {
+  background-color: #333;
+  padding: 10px;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-end; /* Align links to the right */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  margin-left: 10px; /* Add some spacing between links */
+}
+
+.nav-link:first-child {
+  margin-left: 0; /* No margin for the first link */
+}
+
+.nav-link:hover {
+  background-color: #555;
+}
+
+.product-list {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.product-item {
+  border-radius: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 350px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  padding: 10%;
+}
+
+h1 {
+  font-family: 'Caprasimo', cursive;
+  font-size: 3rem;
+  margin: 0 auto 3rem auto;
+  color: #3f3b00;
+  text-align: center;
 }
