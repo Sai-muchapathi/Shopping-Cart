@@ -18,6 +18,8 @@ button {
   background-color: green;
   color: white;
   border-radius: 2px;
+  margin: 2px;
+  padding: 2px;
 }
 
 .navbar {
@@ -58,12 +60,14 @@ button {
   border: 1px solid #ccc;
   padding: 20px;
   width: 350px;
+  flex-direction: column;
 }
 
 .product-image {
   width: 100%;
   height: auto;
   padding: 10%;
+  object-fit: cover;
 }
 
 h1 {
