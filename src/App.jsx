@@ -32,7 +32,7 @@ export const ProductProvider = ({children}) => {
         );
 
         setQuantity(newQuantity);
-        setTotal((prevTotal) => newQuantity * product.price);
+        setTotal(() => newQuantity * product.price);
     };
 
 

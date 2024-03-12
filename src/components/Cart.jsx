@@ -36,7 +36,7 @@ export default function Cart() {
                     </ul>
                 </div>
                 <div className="total">
-                    Total: {total}
+                    Total: {total.toFixed(2)}
                 </div>
             </div>
         </>
