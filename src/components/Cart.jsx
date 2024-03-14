@@ -1,8 +1,18 @@
 import '../cart.css';
-import {useProductContext} from "../App";
+import React from "react";
+import { useProductContext } from "../App";
 
 export default function Cart() {
-    const { cart, handleMinus, handlePlus, total } = useProductContext();
+    const { state, dispatch } = useProductContext();
+    const { cart, total } = state;
+
+    const handleMinus = (product) => {
+        dispatch({ type: 'HANDLE_MINUS', product });
+    };
+
+    const handlePlus = (product) => {
+        dispatch({ type: 'HANDLE_PLUS', product });
+    };
 
     return (
         <>
@@ -12,22 +22,22 @@ export default function Cart() {
 
             <div className="cart-container">
                 <div className="product">
-                    <ul style={{listStyleType: "none", padding: 0}}>
+                    <ul style={{ listStyleType: "none", padding: 0 }}>
                         {cart.map((cartItem, index) => (
-                            <li key={index} style={{display: "flex", alignItems: "center", marginBottom: "10px"}}>
+                            <li key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                                 <div>
                                     <img
                                         src={cartItem.product.image}
                                         alt={cartItem.product.title}
-                                        style={{width: "50px", height: "50px"}}
+                                        style={{ width: "50px", height: "50px" }}
                                     />
                                     <div className="quantity-controls">
-                                        <button onClick={() => handleMinus(cartItem.product, cartItem.quantity)}>-</button>
+                                        <button onClick={() => handleMinus(cartItem.product)}>-</button>
                                         <span>{cartItem.quantity}</span>
-                                        <button onClick={() => handlePlus(cartItem.product, cartItem.quantity)}>+</button>
+                                        <button onClick={() => handlePlus(cartItem.product)}>+</button>
                                     </div>
                                 </div>
-                                <div style={{marginLeft: "10px"}}>
+                                <div style={{ marginLeft: "10px" }}>
                                     <h3>{cartItem.product.title}</h3>
                                     <p>{cartItem.product.price}</p>
                                 </div>
