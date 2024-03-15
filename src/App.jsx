@@ -8,13 +8,13 @@ import Cart from "./components/Cart";
 
 const ProductContext = createContext(null);
 
-const actionTypes = {
+export const actionTypes = {
     SET_PRODUCTS: 'SET_PRODUCTS',
     ADD_TO_CART: 'ADD_TO_CART',
     UPDATE_QUANTITY: 'UPDATE_QUANTITY',
-    HANDLE_MINUS: 'HANDLE_MINUS',
+    SET_TOTAL: 'SET_TOTAL',
     HANDLE_PLUS: 'HANDLE_PLUS',
-    SET_TOTAL: 'SET_TOTAL'
+    HANDLE_MINUS: 'HANDLE_MINUS'
 };
 
 const initialState = {
@@ -51,28 +51,47 @@ function reducer(state, action) {
                 total: action.newQuantity * action.product.price
             };
         case actionTypes.HANDLE_MINUS:
-            const minusNewQuantity = Math.max(state.quantity - 1, 0);
+            const updatedCartMinus = state.cart.map(item => {
+                if (item.product.id === action.product.id) {
+                    const newQuantity = Math.max(item.quantity - 1, 0);
+                    return { ...item, quantity: newQuantity };
+                }
+                return item;
+            });
+            const minusTotal = updatedCartMinus.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
             return {
                 ...state,
-                quantity: minusNewQuantity,
-                total: minusNewQuantity * state.selectedProduct.price
+                cart: updatedCartMinus,
+                total: minusTotal
             };
+
         case actionTypes.HANDLE_PLUS:
-            const plusNewQuantity = state.quantity + 1;
+            const updatedCartPlus = state.cart.map(item => {
+                if (item.product.id === action.product.id) {
+                    const newQuantity = item.quantity + 1;
+                    return { ...item, quantity: newQuantity };
+                }
+                return item;
+            });
+            const plusTotal = updatedCartPlus.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
             return {
                 ...state,
-                quantity: plusNewQuantity,
-                total: plusNewQuantity * state.selectedProduct.price
+                cart: updatedCartPlus,
+                total: plusTotal
             };
         case actionTypes.SET_TOTAL:
             return { ...state, total: action.newTotal };
         default:
             return state;
     }
-};
+}
+
+function init(initialState) {
+    return initialState;
+}
 
 export const ProductProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState, init);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -114,10 +133,10 @@ function App() {
                 <BrowserRouter>
                     <div className="navbar">
                         <Link to="/">Home</Link>
-                        <Link to="/about">about</Link>
-                        <Link to="/careers">careers</Link>
-                        <Link to="/logout">logout</Link>
-                        <Link to="/cart">cart</Link>
+                        <Link to="/about">About</Link>
+                        <Link to="/careers">Careers</Link>
+                        <Link to="/logout">Logout</Link>
+                        <Link to="/cart">Cart</Link>
                     </div>
                     <Routes>
                         <Route path="/" element={<Home />} />
