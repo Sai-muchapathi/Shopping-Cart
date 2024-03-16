@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.header {
+    margin-bottom: 40px;
+}
+.header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.header h1 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+.welcome-message {
+    margin-top: 20px;
+    font-size: 18px;
+}
+.login-signup {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.login-signup a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+.login-signup a.facebook {
+    background-color: #3b5998;
+}
+.login-signup a.twitter {
+    background-color: #1da1f2;
+}
+.login-signup a.google {
+    background-color: #db4437;
+}
+.login-signup a.github {
+    background-color: #24292e;
+}

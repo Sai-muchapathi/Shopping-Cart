@@ -1,0 +1,81 @@
+.login-container {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.login-form input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-login p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.social-icon.facebook {
+    background-color: #3b5998;
+}
+
+.social-icon.twitter {
+    background-color: #1da1f2;
+}
+
+.social-icon.google {
+    background-color: #db4437;
+}
+
+.social-icon:hover {
+    opacity: 0.8;
+}

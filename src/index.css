@@ -22,31 +22,6 @@ button {
   padding: 2px;
 }
 
-.navbar {
-  background-color: #333;
-  padding: 10px;
-}
-
-.links {
-  display: flex;
-  justify-content: flex-end; /* Align links to the right */
-}
-
-.nav-link {
-  color: white;
-  text-decoration: none;
-  padding: 8px;
-  margin-left: 10px; /* Add some spacing between links */
-}
-
-.nav-link:first-child {
-  margin-left: 0; /* No margin for the first link */
-}
-
-.nav-link:hover {
-  background-color: #555;
-}
-
 .product-list {
   list-style: none;
   padding: 0;
@@ -104,4 +79,46 @@ h1 {
   margin: 0 auto 3rem auto;
   color: #3f3b00;
   text-align: center;
+}.navbar {
+   background-color: #333;
+   padding: 10px;
+   display: flex;
+   align-items: center;
+ }
+
+.left-content {
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* Pushes the nav-links to the right */
+}
+
+.logo {
+  width: 60px;
+  height: 100%;
+  margin-right: 10px;
+}
+
+.welcome-message {
+  color: #fff;
+  font-size: 14px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links .nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links .nav-link:hover {
+  background-color: #555;
+  text-decoration: none;
 }

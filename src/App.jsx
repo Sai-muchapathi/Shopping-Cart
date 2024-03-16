@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import React, {createContext, useContext, useEffect, useReducer, useState} from 'react';
+import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import Home from "./components/Home";
 import About from "./components/About";
 import Careers from "./components/Careers";
-import Logout from "./components/Logout";
-import Cart from "./components/Cart";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import Logo from "./Logo.png";
 
 const ProductContext = createContext(null);
 
@@ -125,25 +126,36 @@ export const ProductProvider = ({ children }) => {
 };
 
 export const useProductContext = () => useContext(ProductContext);
-
 function App() {
+    //const [user, setUser] = useState(' ');
+    const [userName, setUserName] = useState('');
+    const HandleUser = (username) => {
+        setUserName(username);
+        console.log(userName);
+    }
     return (
         <ProductProvider>
             <div>
                 <BrowserRouter>
                     <div className="navbar">
-                        <Link to="/">Home</Link>
-                        <Link to="/about">About</Link>
-                        <Link to="/careers">Careers</Link>
-                        <Link to="/logout">Logout</Link>
-                        <Link to="/cart">Cart</Link>
+                        <div className="left-content">
+                            <img src={Logo} alt="Logo" className="logo"/>
+                            <span className="welcome-message">Welcome {userName}</span>
+                        </div>
+                        <div className="nav-links">
+                            <Link to="/" className="nav-link">Home</Link>
+                            <Link to="/about" className="nav-link">About</Link>
+                            <Link to="/careers" className="nav-link">Careers</Link>
+                            <Link to="/login" className="nav-link">Login</Link>
+                            <Link to="/signup" className="nav-link">Signup</Link>
+                        </div>
                     </div>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/careers" element={<Careers />} />
-                        <Route path="/logout" element={<Logout />} />
-                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/careers" element={<Careers/>}/>
+                        <Route path="/login" element={<Login getCredentials={HandleUser}/>}/>
+                        <Route path="/signup" element={<SignUp/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>
