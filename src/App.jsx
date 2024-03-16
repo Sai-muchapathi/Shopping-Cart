@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useReducer, useState} from 'react';
-import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Link, Navigate, Route, Routes} from 'react-router-dom';
 import Home from "./components/Home";
 import About from "./components/About";
 import Careers from "./components/Careers";
@@ -125,18 +125,21 @@ export const ProductProvider = ({ children }) => {
     );
 };
 
+
 export const useProductContext = () => useContext(ProductContext);
+
 function App() {
-    //const [user, setUser] = useState(' ');
     const [userName, setUserName] = useState('');
-    const HandleUser = (username) => {
+
+    const handleUser = (username) => {
         setUserName(username);
-        console.log(userName);
-    }
+    };
+
     return (
         <ProductProvider>
-            <div>
-                <BrowserRouter>
+            <BrowserRouter>
+                <div>
+                    {userName && <Navigate to="/" replace={true}/>}
                     <div className="navbar">
                         <div className="left-content">
                             <img src={Logo} alt="Logo" className="logo"/>
@@ -154,11 +157,11 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/careers" element={<Careers/>}/>
-                        <Route path="/login" element={<Login getCredentials={HandleUser}/>}/>
+                        <Route path="/login" element={<Login getCredentials={handleUser} />}/>
                         <Route path="/signup" element={<SignUp/>}/>
                     </Routes>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         </ProductProvider>
     );
 }

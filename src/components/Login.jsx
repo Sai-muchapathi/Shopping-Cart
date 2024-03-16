@@ -1,16 +1,17 @@
 import '../login.css';
 
-export default function Login({getCredentials}) {
+export default function Login({ getCredentials }) {
+
     function storeUserCreds(event) {
         event.preventDefault();
-        const username = event.target.elements.username.value;
-        getCredentials(username);
+        const enteredUsername = event.target.elements.username.value;
+        getCredentials(enteredUsername);
     }
 
     return (
         <div className="login-container">
             <h2>Login</h2>
-            <form className="login-form" onSubmit={storeUserCreds}  >
+            <form className="login-form" onSubmit={storeUserCreds}>
                 <input type="text" name="username" placeholder="Username" />
                 <input type="password" name="password" placeholder="Password" />
                 <button type="submit">Login</button>
