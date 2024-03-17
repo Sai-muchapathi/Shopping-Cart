@@ -6,6 +6,8 @@ import Careers from "./components/Careers";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Logo from "./Logo.png";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminLogin from "./components/AdminLogin";
 
 const ProductContext = createContext(null);
 
@@ -29,23 +31,23 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case actionTypes.SET_PRODUCTS:
-            return { ...state, products: action.products };
+            return {...state, products: action.products};
         case actionTypes.ADD_TO_CART:
             return {
                 ...state,
-                cart: [...state.cart, { product: action.product, quantity: 1 }]
+                cart: [...state.cart, {product: action.product, quantity: 1}]
             };
         case actionTypes.UPDATE_QUANTITY:
             return {
                 ...state,
                 products: state.products.map(prevProduct =>
                     prevProduct.id === action.product.id
-                        ? { ...prevProduct, quantity: action.newQuantity }
+                        ? {...prevProduct, quantity: action.newQuantity}
                         : prevProduct
                 ),
                 cart: state.cart.map(item =>
                     item.product.id === action.product.id
-                        ? { ...item, quantity: action.newQuantity }
+                        ? {...item, quantity: action.newQuantity}
                         : item
                 ),
                 quantity: action.newQuantity,
@@ -55,7 +57,7 @@ function reducer(state, action) {
             const updatedCartMinus = state.cart.map(item => {
                 if (item.product.id === action.product.id) {
                     const newQuantity = Math.max(item.quantity - 1, 0);
-                    return { ...item, quantity: newQuantity };
+                    return {...item, quantity: newQuantity};
                 }
                 return item;
             });
@@ -70,7 +72,7 @@ function reducer(state, action) {
             const updatedCartPlus = state.cart.map(item => {
                 if (item.product.id === action.product.id) {
                     const newQuantity = item.quantity + 1;
-                    return { ...item, quantity: newQuantity };
+                    return {...item, quantity: newQuantity};
                 }
                 return item;
             });
@@ -81,7 +83,7 @@ function reducer(state, action) {
                 total: plusTotal
             };
         case actionTypes.SET_TOTAL:
-            return { ...state, total: action.newTotal };
+            return {...state, total: action.newTotal};
         default:
             return state;
     }
@@ -91,7 +93,7 @@ function init(initialState) {
     return initialState;
 }
 
-export const ProductProvider = ({ children }) => {
+export const ProductProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState, init);
 
     useEffect(() => {
@@ -105,7 +107,7 @@ export const ProductProvider = ({ children }) => {
                     ...product,
                     quantity: 0 // Initialize quantity to 0
                 }));
-                dispatch({ type: actionTypes.SET_PRODUCTS, products: productsWithQuantity });
+                dispatch({type: actionTypes.SET_PRODUCTS, products: productsWithQuantity});
             } catch (err) {
                 console.log("Error in fetching the data....", err);
             }
@@ -115,11 +117,11 @@ export const ProductProvider = ({ children }) => {
 
     useEffect(() => {
         const newTotal = state.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-        dispatch({ type: actionTypes.SET_TOTAL, newTotal });
+        dispatch({type: actionTypes.SET_TOTAL, newTotal});
     }, [state.cart, state.quantity]);
 
     return (
-        <ProductContext.Provider value={{ state, dispatch }}>
+        <ProductContext.Provider value={{state, dispatch}}>
             {children}
         </ProductContext.Provider>
     );
@@ -143,22 +145,29 @@ function App() {
                     <div className="navbar">
                         <div className="left-content">
                             <img src={Logo} alt="Logo" className="logo"/>
-                            <span className="welcome-message">Welcome {userName}</span>
+                            <span
+                                /*split(\s+) splits the string into array of substrings....
+                                * \w matches any word, digit....
+                                * ^ specifies the beginning of the string*/
+                                className="welcome-message">Welcome {userName.trim().split(/\s+/)[0].replace(/^\w/, (c) => c.toUpperCase())}</span>
                         </div>
                         <div className="nav-links">
                             <Link to="/" className="nav-link">Home</Link>
                             <Link to="/about" className="nav-link">About</Link>
                             <Link to="/careers" className="nav-link">Careers</Link>
-                            <Link to="/login" className="nav-link">Login</Link>
-                            <Link to="/signup" className="nav-link">Signup</Link>
+                            {!userName && <Link to="/login" className="nav-link">Login</Link>}
+                            {!userName && <Link to="/signup" className="nav-link">Signup</Link>}
+                            {userName && <Link to="/logout" className="nav-link">Logout</Link>}
                         </div>
                     </div>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/careers" element={<Careers/>}/>
-                        <Route path="/login" element={<Login getCredentials={handleUser} />}/>
+                        <Route path="/login" element={<Login getCredentials={handleUser}/>}/>
                         <Route path="/signup" element={<SignUp/>}/>
+                        <Route path="/admin" element={<AdminLogin/>}/>
+                        <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
                     </Routes>
                 </div>
             </BrowserRouter>

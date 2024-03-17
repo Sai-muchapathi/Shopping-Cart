@@ -1,0 +1,55 @@
+.admin-container {
+    display: flex;
+}
+
+.admin-drawer {
+    width: 240px;
+    background-color: #333;
+    color: #fff;
+}
+
+.admin-drawer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-drawer li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.admin-drawer li:hover {
+    background-color: #555;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.admin-dashboard {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.dashboard-box {
+    width: 200px;
+    height: 150px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.dashboard-box h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.dashboard-box p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
