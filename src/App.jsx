@@ -8,11 +8,13 @@ import SignUp from "./components/SignUp";
 import Logo from "./Logo.png";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLogin from "./components/AdminLogin";
+import Cart from "./components/Cart";
 
 const ProductContext = createContext(null);
 
 export const actionTypes = {
     SET_PRODUCTS: 'SET_PRODUCTS',
+    SET_USERS: 'SET_USERS',
     ADD_TO_CART: 'ADD_TO_CART',
     UPDATE_QUANTITY: 'UPDATE_QUANTITY',
     SET_TOTAL: 'SET_TOTAL',
@@ -32,6 +34,8 @@ function reducer(state, action) {
     switch (action.type) {
         case actionTypes.SET_PRODUCTS:
             return {...state, products: action.products};
+        case actionTypes.SET_USERS:
+            return {...state, users: action.users};
         case actionTypes.ADD_TO_CART:
             return {
                 ...state,
@@ -116,6 +120,19 @@ export const ProductProvider = ({children}) => {
     }, []);
 
     useEffect(() => {
+        const fetchUsersData = async () => {
+            try {
+                const response = await fetch("https://fakestoreapi.com/users");
+                const fetchedUsers = await response.json();
+                dispatch({type: actionTypes.SET_USERS, users: fetchedUsers});
+            } catch (err) {
+                console.log("Error in fetching the data....", err);
+            }
+        };
+        fetchUsersData().then();
+    }, []);
+
+    useEffect(() => {
         const newTotal = state.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
         dispatch({type: actionTypes.SET_TOTAL, newTotal});
     }, [state.cart, state.quantity]);
@@ -164,6 +181,7 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/careers" element={<Careers/>}/>
+                        <Route path="/cart" element={<Cart/>}/>
                         <Route path="/login" element={<Login getCredentials={handleUser}/>}/>
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/admin" element={<AdminLogin/>}/>

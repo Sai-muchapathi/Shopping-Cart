@@ -8,10 +8,7 @@ const AdminLogin = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = () => {
-        // Perform authentication logic here
-        // For simplicity, let's assume username is 'admin' and password is 'password'
         if (username === 'admin' && password === 'password') {
-            // Redirect to admin dashboard after successful login
             setIsLoggedIn(true);
             alert('Success');
         } else {
