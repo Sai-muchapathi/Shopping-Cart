@@ -9,6 +9,7 @@ import Logo from "./Logo.png";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLogin from "./components/AdminLogin";
 import Cart from "./components/Cart";
+import Users from "./components/Users";
 
 const ProductContext = createContext(null);
 
@@ -22,6 +23,7 @@ export const actionTypes = {
     HANDLE_MINUS: 'HANDLE_MINUS'
 };
 
+// Initial state for products
 const initialState = {
     products: [],
     selectedProduct: null,
@@ -30,7 +32,23 @@ const initialState = {
     total: 0
 };
 
-function reducer(state, action) {
+// Initial state for users
+const initialUsers = {
+    users: []
+};
+
+// maintaining separate reducer function for users
+function userReducer(state, action) {
+    switch (action.type) {
+        case actionTypes.SET_USERS:
+            return {...state, users: action.users};
+        default:
+            return state;
+    }
+}
+
+// reducer function to handle products operations
+function productReducer(state, action) {
     switch (action.type) {
         case actionTypes.SET_PRODUCTS:
             return {...state, products: action.products};
@@ -93,13 +111,22 @@ function reducer(state, action) {
     }
 }
 
-function init(initialState) {
-    return initialState;
+//using both initial states of products and users
+function init(initialState, initialUsers) {
+    return {
+        state: initialState,
+        users: initialUsers
+    };
 }
 
 export const ProductProvider = ({children}) => {
-    const [state, dispatch] = useReducer(reducer, initialState, init);
 
+    //reducer for products
+    const [state, dispatch] = useReducer(productReducer, initialState, init);
+    // reducer for users
+    const [user, userDispatch] = useReducer(userReducer, initialUsers, init);
+
+    //fetching product details
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -119,6 +146,7 @@ export const ProductProvider = ({children}) => {
         fetchData().then();
     }, []);
 
+    //fetching user details
     useEffect(() => {
         const fetchUsersData = async () => {
             try {
@@ -133,12 +161,15 @@ export const ProductProvider = ({children}) => {
     }, []);
 
     useEffect(() => {
-        const newTotal = state.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-        dispatch({type: actionTypes.SET_TOTAL, newTotal});
-    }, [state.cart, state.quantity]);
+        if (state && state.cart) {
+            const newTotal = state.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+            dispatch({type: actionTypes.SET_TOTAL, newTotal});
+        }
+    }, [state, state.cart, state.quantity]);
 
     return (
-        <ProductContext.Provider value={{state, dispatch}}>
+        // passing both state and dispatch functions of products and users
+        <ProductContext.Provider value={{state, dispatch, user, userDispatch}}>
             {children}
         </ProductContext.Provider>
     );
@@ -150,6 +181,7 @@ export const useProductContext = () => useContext(ProductContext);
 function App() {
     const [userName, setUserName] = useState('');
 
+    // Handling username
     const handleUser = (username) => {
         setUserName(username);
     };
@@ -158,6 +190,7 @@ function App() {
         <ProductProvider>
             <BrowserRouter>
                 <div>
+                    (/*If the user is logged-in redirect to the root path*/)
                     {userName && <Navigate to="/" replace={true}/>}
                     <div className="navbar">
                         <div className="left-content">
@@ -184,6 +217,7 @@ function App() {
                         <Route path="/cart" element={<Cart/>}/>
                         <Route path="/login" element={<Login getCredentials={handleUser}/>}/>
                         <Route path="/signup" element={<SignUp/>}/>
+                        <Route path="/admin/users" element={<Users/>}/>
                         <Route path="/admin" element={<AdminLogin/>}/>
                         <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
                     </Routes>
