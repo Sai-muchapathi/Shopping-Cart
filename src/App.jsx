@@ -55,6 +55,13 @@ function productReducer(state, action) {
         case actionTypes.SET_USERS:
             return {...state, users: action.users};
         case actionTypes.ADD_TO_CART:
+            // Fetching local storage data, otherwise set to empty array
+            const storedProducts =  JSON.parse(localStorage.getItem('selectedProduct')) || [];
+            // Store new record if the localstorage doesn't have the current value
+            if(storedProducts !== ' ') {
+                // storing the new record in selectedProduct localstorage
+                localStorage.setItem('selectedProduct', JSON.stringify([action.product, ...storedProducts]));
+            }
             return {
                 ...state.cart,
                 cart: [...state.cart, {cart: action.product, quantity: 1}]
