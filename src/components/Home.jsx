@@ -33,7 +33,7 @@ export default function Home() {
                         </Link>
 
                         <ul className="product-list">
-                            {products.map((product) => (
+                            {products?.map((product) => (
                                 <li
                                     key={product.id}
                                     className={`product-item ${selectedProduct && selectedProduct.id === product.id ? "selected" : ""}`}

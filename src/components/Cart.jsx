@@ -24,7 +24,7 @@ export default function Cart() {
             <div className="cart-container">
                 <div className="product">
                     <ul style={{ listStyleType: "none", padding: 0 }}>
-                        {cart.map((cartItem, index) => (
+                        {cart?.map((cartItem, index) => (
                             <li key={index} style={{display: "flex", alignItems: "center", marginBottom: "10px"}}>
                                 <div>
                                     <img
@@ -47,7 +47,7 @@ export default function Cart() {
                     </ul>
                 </div>
                 <div className="total">
-                    Total: {total.toFixed(2)}
+                    Total: {total?.toFixed(2)}
                 </div>
             </div>
         </>

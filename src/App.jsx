@@ -56,8 +56,8 @@ function productReducer(state, action) {
             return {...state, users: action.users};
         case actionTypes.ADD_TO_CART:
             return {
-                ...state,
-                cart: [...state.cart, {product: action.product, quantity: 1}]
+                ...state.cart,
+                cart: [...state.cart, {cart: action.product, quantity: 1}]
             };
         case actionTypes.UPDATE_QUANTITY:
             return {
@@ -180,8 +180,11 @@ export const useProductContext = () => useContext(ProductContext);
 
 function App() {
     const [userName, setUserName] = useState('');
+    const [location, setLocation] = useState(null);
+    navigator.geolocation.getCurrentPosition((position) => {
+        setLocation(position.coords.accuracy);
+    });
 
-    // Handling username
     const handleUser = (username) => {
         setUserName(username);
     };
@@ -190,7 +193,6 @@ function App() {
         <ProductProvider>
             <BrowserRouter>
                 <div>
-                    (/*If the user is logged-in redirect to the root path*/)
                     {userName && <Navigate to="/" replace={true}/>}
                     <div className="navbar">
                         <div className="left-content">
@@ -199,7 +201,7 @@ function App() {
                                 /*split(\s+) splits the string into array of substrings....
                                 * \w matches any word, digit....
                                 * ^ specifies the beginning of the string*/
-                                className="welcome-message">Welcome {userName.trim().split(/\s+/)[0].replace(/^\w/, (c) => c.toUpperCase())}</span>
+                                className="welcome-message">Welcome {userName.trim().split(/\s+/)[0].replace(/^\w/, (c) => c.toUpperCase())},{location}</span>
                         </div>
                         <div className="nav-links">
                             <Link to="/" className="nav-link">Home</Link>
