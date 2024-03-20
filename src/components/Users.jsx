@@ -1,4 +1,4 @@
-import { useProductContext } from "../App";
+import { useProductContext } from "./ProductProvider";
 
 export default function Users() {
     const { state } = useProductContext();

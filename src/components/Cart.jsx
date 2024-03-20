@@ -1,7 +1,7 @@
 import '../cart.css';
 import React from "react";
-import { useProductContext } from "../App";
-import { actionTypes } from "../App";
+import { useProductContext } from "./ProductProvider";
+import { actionTypes } from "./ProductProvider";
 
 export default function Cart() {
     const { state, dispatch } = useProductContext();
