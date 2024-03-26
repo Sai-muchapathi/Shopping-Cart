@@ -25,8 +25,23 @@ function productReducer(state, action) {
         case actionTypes.SET_USERS:
             return { ...state, users: action.users };
         case actionTypes.ADD_TO_CART:
-            const newCart = [...state.cart, { product: action.product, quantity: 1 }];
-            return { ...state, cart: newCart };
+            // Fetching local storage data, otherwise set to empty array
+            const storedProducts = JSON.parse(localStorage.getItem('selectedProduct')) || [];
+
+            // Check if the product already exists in the cart
+            const existingProductIndex = state.cart.findIndex(item => item.product.id === action.product.id);
+            if (existingProductIndex !== -1) {
+                // If the product exists, update the quantity
+                const updatedCart = [...state.cart];
+                updatedCart[existingProductIndex].quantity++;
+                localStorage.setItem('selectedProduct', JSON.stringify(updatedCart.map(item => item.product)));
+                return { ...state, cart: updatedCart };
+            } else {
+                // If the product doesn't exist, add it to the cart
+                localStorage.setItem('selectedProduct', JSON.stringify([...storedProducts, action.product]));
+                const newCart = [...state.cart, { product: action.product, quantity: 1 }];
+                return { ...state, cart: newCart };
+            }
         case actionTypes.UPDATE_QUANTITY:
             const updatedCart = state.cart.map(item =>
                 item.product.id === action.product.id ? { ...item, quantity: action.newQuantity } : item
