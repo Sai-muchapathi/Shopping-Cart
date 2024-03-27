@@ -43,16 +43,16 @@ Open your browser and navigate to `http://localhost:3000` to view the applicatio
 ```
 
 ## Components
-**Home**: Displays the main page of the e-commerce store with a list of products.
-**About**: Provides information about the company or the store.
-**Careers**: Displays career opportunities available at the company.
-**Login**: Allows users to log in to their account.
-**SignUp**: Allows users to sign up for a new account.
-**AdminDashboard**: Dashboard for administrators to manage the store.
-**AdminLogin**: Login page for administrators.
-**Cart**: Displays the items added to the cart and allows users to adjust quantities.
-**Users**: Displays a list of users (admin feature).
-**ProductProvider**: Context provider for managing product and user state throughout the application.
+* **Home**: Displays the main page of the e-commerce store with a list of products.
+* **About**: Provides information about the company or the store.
+* **Careers**: Displays career opportunities available at the company.
+* **Login**: Allows users to log in to their account.
+* **SignUp**: Allows users to sign up for a new account.
+* **AdminDashboard**: Dashboard for administrators to manage the store.
+* **AdminLogin**: Login page for administrators.
+* **Cart**: Displays the items added to the cart and allows users to adjust quantities.
+* **Users**: Displays a list of users (admin feature).
+* **ProductProvider**: Context provider for managing product and user state throughout the application.
 
 ## Dependencies
 - React
@@ -80,13 +80,13 @@ Open your browser and navigate to `http://localhost:3000` to view the applicatio
 - **Effects**: The useEffect hook is used to fetch data from external APIs when the component mounts. It ensures that data is fetched only once when the component mounts.
 
 ##  React Hooks Used
-**useState**: Used to manage local component state.
-**useReducer**: Utilized for managing complex state logic with actions and reducers.
-**useEffect**: Employed for performing side effects such as data fetching when components mount.
-**useMemo**: Utilized to memoize expensive calculations and optimize performance.
-**useCallback**: Used to memoize event handler functions and prevent unnecessary re-renders.
-**useContext**: Utilized to consume the context values provided by the ProductProvider.
-**useRef**: Employed to maintain a reference to a value across renders.
+* **useState**: Used to manage local component state.
+* **useReducer**: Utilized for managing complex state logic with actions and reducers.
+* **useEffect**: Employed for performing side effects such as data fetching when components mount.
+* **useMemo**: Utilized to memoize expensive calculations and optimize performance.
+* **useCallback**: Used to memoize event handler functions and prevent unnecessary re-renders.
+* **useContext**: Utilized to consume the context values provided by the ProductProvider.
+* **useRef**: Employed to maintain a reference to a value across renders.
 
 
 ## Here's a breakdown of the components usage:
