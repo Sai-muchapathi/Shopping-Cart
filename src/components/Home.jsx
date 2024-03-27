@@ -1,23 +1,43 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useProductContext } from "./ProductProvider";
 import { Loading } from "./Loading";
 
+const handleProductClick = (id, setSelectedProduct, products) => {
+    setSelectedProduct(products.find(product => product.id === id));
+};
+
 export default function Home() {
     const { state, dispatch } = useProductContext();
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Simulate data fetching delay for 2 seconds
-    setTimeout(() => setLoading(false), 2000);
-
-    function handleProductClick(id) {
-        setSelectedProduct(state.products.find(product => product.id === id));
-    }
-
     const { products } = state;
+
+    useEffect(() => {
+        // Simulate data fetching delay for 2 seconds
+        const fetchData = setTimeout(() => setLoading(false), 2000);
+        // Clean up function to clear timeout if component unmounts
+        return () => clearTimeout(fetchData);
+    }, [products]);
+
+    const productsList = useMemo(() => (
+        products?.map((product) => (
+            <li
+                key={product.id}
+                className={`product-item ${selectedProduct && selectedProduct.id === product.id ? "selected" : ""}`}
+            >
+                <img src={product.image} alt={product.title} className="product-image"
+                     onClick={() => handleProductClick(product.id, setSelectedProduct, products)}/>
+                <h3>{product.title}</h3>
+                <h6>{product.description}</h6>
+                <button onClick={() => dispatch({ type: 'ADD_TO_CART', product })}>Add to cart</button>
+                <button>wishlist❤</button>
+            </li>
+        ))
+    ), [products, selectedProduct, dispatch]);
 
     return (
         <Suspense fallback={<Loading/>}>
@@ -33,19 +53,7 @@ export default function Home() {
                         </Link>
 
                         <ul className="product-list">
-                            {products?.map((product) => (
-                                <li
-                                    key={product.id}
-                                    className={`product-item ${selectedProduct && selectedProduct.id === product.id ? "selected" : ""}`}
-                                >
-                                    <img src={product.image} alt={product.title} className="product-image"
-                                         onClick={() => handleProductClick(product.id)}/>
-                                    <h3>{product.title}</h3>
-                                    <h6>{product.description}</h6>
-                                    <button onClick={() => dispatch({type: 'ADD_TO_CART', product})}>Add to cart</button>
-                                    <button>wishlist❤</button>
-                                </li>
-                            ))}
+                            {productsList}
                         </ul>
                     </div>
 
